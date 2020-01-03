@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Hello world Vue.js</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+
+    <main id="app" class="container">
+        <h1 class="mb-5" :class="[background, 'text-white']">{{title}}</h1>
+        <input type="text" class="form-control mb-5" placeholder="Background title" v-model="background">
+
+        <div class="mb-4">
+            <input type="text" placeholder="Name fruit" v-model="newFruit" @keyup.enter="addFruit">
+            <button @click="addFruit">Add</button>
+        </div>
+
+        <ul>
+            <li v-for="fruit of fruits">
+                <input type="text" v-model.number="fruit.quantity">
+                {{fruit.name}}
+                <button @click="fruit.quantity++">+</button>
+                <span v-if="fruit.quantity < 1">- Sin stock</span>
+            </li>
+        </ul>
+
+        <h4 class="mt-4 p-2" :class="{'bg-success': totalBackground, 'text-white': totalBackground}">Total: {{totalFruits}}</h4>
+
+        <button class="btn btn-primary" @click="totalBackground = !totalBackground">Change Background</button>
+
+        <app-first-component comment-sec="This component is good" @nameChild="nameParent = $event"></app-first-component>
+    </main>
+
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>

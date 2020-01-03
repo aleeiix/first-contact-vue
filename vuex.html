@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Vuex</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vuex@3.1.2/dist/vuex.js"></script>
+</head>
+<body>
+    <main id="app">
+        <app-title></app-title>
+    </main>
+
+    <script>
+        Vue.component('app-title', {
+            template: `
+            <div>
+                <h1>Number: {{number}}</h1>
+                <app-button></app-button>
+            </div>
+            `,
+            computed: {
+                ...Vuex.mapState(['number'])
+            }
+        });
+
+        Vue.component('app-button', {
+            created() {
+                this.getCourses();
+            },
+            template: `
+            <div>
+                <button @click="increment">+</button>
+                <ul v-if="courses !== []">
+                    <li v-for="course of courses">{{course.name}}</li>
+                </ul>
+            </div>
+            `,
+            computed: {
+                ...Vuex.mapState(['courses'])
+            },
+            methods: {
+                ...Vuex.mapMutations(['increment']),
+                ...Vuex.mapActions(['getCourses'])
+            }
+        });
+
+        const store = new Vuex.Store({
+            state: {
+                number: 10,
+                courses: []
+            },
+            mutations: {
+                increment(state) {
+                    state.number++
+                },
+                setCourses(state, courses) {
+                    state.courses = courses;
+                }
+            },
+            actions: {
+                getCourses: async ({ commit }) => {
+                    const data = await fetch('courses.json');
+                    const courses = await data.json();
+                    commit('setCourses', courses);
+                }
+            }
+        });
+
+        new Vue({
+            el: '#app',
+            store
+        });
+    </script>
+</body>
+</html>
