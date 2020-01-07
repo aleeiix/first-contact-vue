@@ -12,12 +12,12 @@ const routes = [
   {
     path: '/new',
     name: 'new',
-    component: () => import(/* webpackChunkName: "list" */ '../views/Task.vue')
+    component: () => import(/* webpackChunkName: "create" */ '../views/Create.vue')
   },
   {
     path: '/edit/:id',
     name: 'edit',
-    component: () => import(/* webpackChunkName: "list" */ '../views/Task.vue')
+    component: () => import(/* webpackChunkName: "edit" */ '../views/Edit.vue')
   }
 ]
 

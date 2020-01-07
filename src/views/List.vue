@@ -11,7 +11,7 @@
               <font-awesome-icon icon="edit" />
             </button>
           </router-link>
-          <button class="btn btn-danger">
+          <button @click="remove(task.id)" class="btn btn-danger">
             <font-awesome-icon icon="trash-alt" />
           </button>
         </div>
@@ -35,17 +35,24 @@ export default {
     ...mapState(['tasks'])
   },
   methods: {
-    ...mapActions(['getTasks'])
+    ...mapActions(['getTasks', 'deleteTask']),
+    remove(idTask) {
+      this.deleteTask(idTask);
+    }
   }
 }
 </script>
 
 <style scoped>
-  main ul {
+  div.list h1 {
+    margin-bottom: 1em;
+  }
+
+  div.list ul {
      margin-bottom: 1em;
    }
 
-  main ul button:last-child{
+  div.list ul button:last-child{
     margin-left: 0.5em;
   }
 </style>
