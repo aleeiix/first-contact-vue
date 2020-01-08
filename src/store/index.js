@@ -25,7 +25,7 @@ export default new Vuex.Store({
             commit('setUser', {uid: res.user.uid, email: res.user.email});
           })
           .catch((err) => {
-            console.log(err);
+            commit('setError', err.message);
           })
     }
   },
