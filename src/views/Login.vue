@@ -1,8 +1,8 @@
 <template>
-    <div class="register container">
-        <h1 class="mb-5">User Registration</h1>
+    <div class="login container">
+        <h1 class="mb-5">Log in</h1>
 
-        <form @submit.prevent="registerUser(user)">
+        <form @submit.prevent="loginUser(user)">
             <div class="form-group text-left mb-4">
                 <label for="email" class="font-weight-bold">Email address:</label>
                 <input v-model="user.email" type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
@@ -13,12 +13,7 @@
                 <input v-model="user.password" type="password" class="form-control" id="password" placeholder="Enter password">
             </div>
 
-            <div class="form-group text-left mb-4">
-                <label for="repeatPassword" class="font-weight-bold">Repeat password:</label>
-                <input v-model="user.repeatPassword" type="password" class="form-control" id="repeatPassword" placeholder="Repeat password">
-            </div>
-
-            <button :disabled="isInvalid" type="submit" class="btn btn-primary btn-block">Registry</button>
+            <button :disabled="isInvalid" type="submit" class="btn btn-primary btn-block">Enter</button>
 
             <p class="has_error text-danger">{{error}}</p>
         </form>
@@ -29,13 +24,12 @@
     import {mapActions, mapState} from 'vuex';
 
     export default {
-        name: "register",
+        name: "login",
         data() {
             return {
                 user: {
                     email: '',
-                    password: '',
-                    repeatPassword: ''
+                    password: ''
                 }
             }
         },
@@ -45,13 +39,11 @@
                 return !(
                     this.user.email
                     && this.user.password
-                    && this.user.repeatPassword
-                    && (this.user.password == this.user.repeatPassword)
                 );
             }
         },
         methods: {
-            ...mapActions(['registerUser'])
+            ...mapActions(['loginUser'])
         }
     }
 </script>

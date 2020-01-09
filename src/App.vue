@@ -1,11 +1,25 @@
 <template>
   <div id="app">
     <div id="nav" class="text-right">
-      <router-link :to="{name: 'register'}">Registry</router-link>
+      <router-link :to="{name: 'home'}">Home</router-link> - 
+      <router-link :to="{name: 'login'}">Login</router-link> -
+      <router-link :to="{name: 'register'}">Registry</router-link> -
+      <a @click="logout">Cerrar Sesión</a>
     </div>
     <router-view/>
   </div>
 </template>
+
+<script>
+  import {mapActions} from 'vuex';
+
+  export default {
+    name: 'app',
+    methods: {
+      ...mapActions(['logout'])
+    }
+  }
+</script>
 
 <style>
 #app {
@@ -21,7 +35,7 @@
 }
 
 #nav a {
-  font-weight: bold;
+  font-weight: lighter;
   color: #2c3e50;
 }
 

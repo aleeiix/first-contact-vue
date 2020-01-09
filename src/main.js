@@ -25,7 +25,16 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
+
+firebase.auth().onAuthStateChanged((user) => {
+  console.log(user);
+  if (user) {
+    store.dispatch('detectUser', {uid: user.uid, email: user.email});
+  } else {
+    store.dispatch('detectUser', null);
+  }
+});
 
 new Vue({
   router,
