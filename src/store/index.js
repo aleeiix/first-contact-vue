@@ -49,6 +49,11 @@ export default new Vuex.Store({
             router.push({name: 'login'});
         },
     },
+    getters: {
+        existUser(state) {
+            return !(state.user === null || state.user === '' || state.user === undefined)
+        }
+    },
     modules: {
     }
 })

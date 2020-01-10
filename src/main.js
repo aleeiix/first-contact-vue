@@ -28,7 +28,6 @@ firebase.initializeApp(firebaseConfig);
 Vue.config.productionTip = false;
 
 firebase.auth().onAuthStateChanged((user) => {
-  console.log(user);
   if (user) {
     store.dispatch('detectUser', {uid: user.uid, email: user.email});
   } else {
