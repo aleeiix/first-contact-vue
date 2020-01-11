@@ -1,9 +1,9 @@
 <template>
     <div id="app">
         <div id="nav" class="text-right">
-            <router-link v-if="existUser" :to="{name: 'home'}">Home</router-link>
-            <router-link v-if="!existUser" :to="{name: 'login'}">Login</router-link>
-            <router-link v-if="!existUser" :to="{name: 'register'}">Registry</router-link>
+            <router-link v-if="existUser" :to="{name: 'home'}">Home</router-link> |
+            <router-link v-if="!existUser" :to="{name: 'login'}">Login</router-link> |
+            <router-link v-if="!existUser" :to="{name: 'register'}">Registry</router-link> |
             <a v-if="existUser" @click="logout">Cerrar Sesión</a>
         </div>
         <router-view/>
