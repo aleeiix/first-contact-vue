@@ -3,11 +3,20 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+library.add([faEdit, faTrashAlt])
+
+Vue.component('font-awesome-icon', FontAwesomeIcon)
+
+
 const firebase = require('firebase/app');
 
 require('firebase/auth');
 // require('firebase/database');
-// require('firebase/firestore');
+require('firebase/firestore');
 // require('firebase/messaging');
 // require('firebase/functions');
 
@@ -23,7 +32,7 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+const firebaseApp = firebase.initializeApp(firebaseConfig);
 
 Vue.config.productionTip = false;
 
@@ -40,3 +49,5 @@ new Vue({
   store,
   render: h => h(App)
 }).$mount('#app')
+
+export default firebaseApp.firestore();
