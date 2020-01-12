@@ -1,5 +1,5 @@
 <template>
-    <div class="task">
+    <div class="task container">
         <h1>Edit Task</h1>
 
         <form @submit.prevent="save">

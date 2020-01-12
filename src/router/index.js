@@ -9,7 +9,19 @@ const routes = [
     {
         path: '/',
         name: 'home',
-        component: () => import(/* webpackChunkName: "home" */ '../views/Home.vue'),
+        component: () => import(/* webpackChunkName: "list" */ '../views/List.vue'),
+        meta: {requiredAuth: true}
+    },
+    {
+        path: '/edit/:id',
+        name: 'edit',
+        component: () => import(/* webpackChunkName: "edit" */ '../views/Edit.vue'),
+        meta: {requiredAuth: true}
+    },
+    {
+        path: '/new',
+        name: 'new',
+        component: () => import(/* webpackChunkName: "create" */ '../views/Create.vue'),
         meta: {requiredAuth: true}
     },
     {

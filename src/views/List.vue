@@ -1,5 +1,5 @@
 <template>
-    <div class="list">
+    <div class="list container">
         <h1>Task List</h1>
         <ul class="list-group">
             <li v-for="task of tasks" class="list-group-item d-flex justify-content-between align-items-center">

@@ -38,7 +38,7 @@ export default new Vuex.Store({
                     commit('setUser', {uid: res.user.uid, email: res.user.email});
 
                     db.collection(res.user.email).add({
-                        name: 'Example task!'
+                        text: 'Example task!'
                     }).then(() => {
                         router.push({name: 'home'});
                     }).catch((err) => {
@@ -87,23 +87,23 @@ export default new Vuex.Store({
                     commit('setTask', Object.assign({id: doc.id}, doc.data()));
                 })
         },
-        editTask({commit}, payload) {
+        saveTask({commit}, payload) {
             const user = firebase.auth().currentUser;
-            db.collection(user.email).doc(payload).update({
-                name: payload
+            db.collection(user.email).doc(payload.id).update({
+                text: payload.text
             }).then(() => {
-                router.push({name: home})
+                router.push({name: 'home'})
             })
         },
-        addTask({commit}, payload) {
+        createTask({commit}, payload) {
             const user = firebase.auth().currentUser;
             db.collection(user.email).add({
-                name: payload
+                text: payload
             }).then(() => {
-                router.push({name: home})
+                router.push({name: 'home'})
             })
         },
-        removeTask({commit}, payload) {
+        deleteTask({commit}, payload) {
             const user = firebase.auth().currentUser;
             db.collection(user.email).doc(payload).delete()
                 .then(() => {
