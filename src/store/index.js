@@ -12,7 +12,8 @@ export default new Vuex.Store({
         user: null,
         error: null,
         tasks: [],
-        task: null
+        task: null,
+        isLoading: false
     },
     mutations: {
         setUser(state, payload) {
@@ -29,6 +30,9 @@ export default new Vuex.Store({
         },
         removeTask(state, payload) {
             state.tasks = state.tasks.filter((task) => task.id !== payload);
+        },
+        setLoading(state, payload) {
+            state.isLoading = payload;
         }
     },
     actions: {
@@ -69,6 +73,8 @@ export default new Vuex.Store({
         },
 
         getTasks({commit}) {
+            commit('setLoading', true);
+
             const user = firebase.auth().currentUser;
             const tasks = [];
             db.collection(user.email).get()
@@ -76,9 +82,9 @@ export default new Vuex.Store({
                     snapshots.forEach((snapshot) => {
                         tasks.push(Object.assign({id: snapshot.id}, snapshot.data()))
                     })
+                    commit('setLoading', false);
+                    commit('setTasks', tasks);
                 })
-
-            commit('setTasks', tasks);
         },
         getTask({commit}, payload) {
             const user = firebase.auth().currentUser;
