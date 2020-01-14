@@ -102,11 +102,14 @@ export default new Vuex.Store({
             })
         },
         createTask({commit}, payload) {
+            commit('setLoading', true);
+
             const user = firebase.auth().currentUser;
             db.collection(user.email).add({
                 text: payload
             }).then(() => {
                 router.push({name: 'home'})
+                commit('setLoading', false);
             })
         },
         deleteTask({commit}, payload) {

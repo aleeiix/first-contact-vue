@@ -21,6 +21,9 @@ library.add([faEdit, faTrashAlt])
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 
+import Vuelidate from "vuelidate/src";
+Vue.use(Vuelidate)
+
 const firebase = require('firebase/app');
 
 require('firebase/auth');

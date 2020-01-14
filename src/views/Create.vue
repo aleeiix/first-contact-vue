@@ -5,16 +5,20 @@
         <form @submit.prevent="create">
             <div class="form-group">
                 <label for="taskInput">Task:</label>
-                <input v-model="text" type="text" class="form-control" id="taskInput" placeholder="Task text...">
+                <input v-model="$v.text.$model" type="text" class="form-control" id="taskInput" placeholder="Task text...">
+                <small v-if="!$v.text.required && $v.text.$dirty" class="text-danger">Required field</small>
+                <small v-if="!$v.text.minLength && $v.text.$dirty" class="text-danger">5 characters minimum</small>
             </div>
-
-            <button type="submit" class="btn btn-primary btn-block">Create Task</button>
+{{$v.text}}
+            <button type="submit" :disabled="$v.$invalid || isLoading" class="btn btn-primary btn-block">Create Task</button>
         </form>
     </div>
 </template>
 
 <script>
-    import { mapActions } from 'vuex'
+    import { mapActions, mapState } from 'vuex'
+    import {required, minLength} from 'vuelidate/lib/validators'
+
     export default {
         name: 'create',
         data() {
@@ -23,12 +27,16 @@
             }
         },
         computed: {
+            ...mapState(['isLoading'])
         },
         methods: {
             ...mapActions(['createTask']),
             create() {
                 this.createTask(this.text);
             }
+        },
+        validations: {
+            text: {required, minLength:minLength(5)}
         }
     }
 </script>
