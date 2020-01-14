@@ -9,7 +9,7 @@
                 <small v-if="!$v.text.required && $v.text.$dirty" class="text-danger">Required field</small>
                 <small v-if="!$v.text.minLength && $v.text.$dirty" class="text-danger">5 characters minimum</small>
             </div>
-{{$v.text}}
+
             <button type="submit" :disabled="$v.$invalid || isLoading" class="btn btn-primary btn-block">Create Task</button>
         </form>
     </div>
