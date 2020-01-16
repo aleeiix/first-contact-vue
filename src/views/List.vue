@@ -1,8 +1,20 @@
 <template>
     <div class="list container">
         <h1>Task List</h1>
+
+        <form @submit.prevent="search(text)">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                        <font-awesome-icon icon="search" />
+                    </span>
+                </div>
+                <input v-model="text" @keyup="search(text)" type="text" class="form-control" placeholder="Search for some task">
+            </div>
+        </form>
+        
         <ul v-if="!isLoading" class="list-group">
-            <li v-for="task of tasks" class="list-group-item d-flex justify-content-between align-items-center">
+            <li v-for="task of tasksFiltered" class="list-group-item d-flex justify-content-between align-items-center">
                 {{task.text}}
 
                 <div>
@@ -11,7 +23,7 @@
                             <font-awesome-icon icon="edit" />
                         </button>
                     </router-link>
-                    <button @click="remove(task.id)" class="btn btn-danger">
+                    <button @click="deleteTask(task.id)" class="btn btn-danger">
                         <font-awesome-icon icon="trash-alt" />
                     </button>
                 </div>
@@ -30,7 +42,7 @@
 </template>
 
 <script>
-    import { mapActions, mapState } from 'vuex'
+    import { mapActions, mapState, mapGetters } from 'vuex'
     import ScaleLoader from 'vue-spinner/src/ScaleLoader.vue'
 
     export default {
@@ -38,14 +50,17 @@
         created() {
             this.getTasks();
         },
+        data() {
+            return {
+                text: null
+            }
+        },
         computed: {
-            ...mapState(['tasks', 'isLoading'])
+            ...mapState(['tasks', 'isLoading']),
+            ...mapGetters(['tasksFiltered'])
         },
         methods: {
-            ...mapActions(['getTasks', 'deleteTask']),
-            remove(idTask) {
-                this.deleteTask(idTask);
-            }
+            ...mapActions(['getTasks', 'deleteTask', 'search'])
         },
         components: {
             ScaleLoader

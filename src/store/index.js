@@ -13,7 +13,8 @@ export default new Vuex.Store({
         error: null,
         tasks: [],
         task: null,
-        isLoading: false
+        isLoading: false,
+        textFilter: ''
     },
     mutations: {
         setUser(state, payload) {
@@ -33,6 +34,9 @@ export default new Vuex.Store({
         },
         setLoading(state, payload) {
             state.isLoading = payload;
+        },
+        setTextFilter(state, payload) {
+            state.textFilter = payload;
         }
     },
     actions: {
@@ -130,11 +134,17 @@ export default new Vuex.Store({
                 .then(() => {
                     commit('removeTask', payload)
                 })
+        },
+        search({commit}, payload) {
+            commit('setTextFilter', payload)
         }
     },
     getters: {
         existUser(state) {
             return !(state.user === null || state.user === '' || state.user === undefined)
+        },
+        tasksFiltered(state) {
+            return state.tasks.filter((task) => task.text.toLowerCase().indexOf(state.textFilter.toLowerCase()) >= 0);
         }
     },
     modules: {
