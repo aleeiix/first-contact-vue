@@ -37,6 +37,8 @@ export default new Vuex.Store({
     },
     actions: {
         registerUser({commit}, payload) {
+            commit('setLoading', true);
+
             firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
                 .then((res) => {
                     commit('setUser', {uid: res.user.uid, email: res.user.email});
@@ -45,22 +47,29 @@ export default new Vuex.Store({
                         text: 'Example task!'
                     }).then(() => {
                         router.push({name: 'home'});
+                        commit('setLoading', false);
                     }).catch((err) => {
                         commit('setError', err.message);
+                        commit('setLoading', false);
                     })
                 })
                 .catch((err) => {
                     commit('setError', err.message);
+                    commit('setLoading', false);
                 });
         },
         loginUser({commit}, payload) {
+            commit('setLoading', true);
+
             firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
                 .then((res) => {
                     commit('setUser', {uid: res.user.uid, email: res.user.email});
                     router.push({name: 'home'});
+                    commit('setLoading', false);
                 })
                 .catch((err) => {
                     commit('setError', err.message);
+                    commit('setLoading', false);
                 });
         },
         detectUser({commit}, payload) {
