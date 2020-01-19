@@ -1,7 +1,8 @@
 <template>
   <v-app>
     <v-app-bar app color="primary" dark>
-      <div class="d-flex align-center">
+      <router-link :to="{name: 'home'}">
+        <div class="d-flex align-center">
         <v-img
           alt="Vuetify Logo"
           class="shrink mr-2"
@@ -11,12 +12,13 @@
           width="40"
         />
 
-        <span class="mt-1">Vue</span>
+        <span class="mt-1 white--text">Vue</span>
       </div>
+      </router-link>
 
       <v-spacer></v-spacer>
 
-      <v-btn text>
+      <v-btn v-if="isLogged" @click="logout" text>
         <span class="mr-2">Sign Out</span>
         <v-icon>fas fa-external-link-alt</v-icon>
       </v-btn>
@@ -31,8 +33,15 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
 export default {
   name: "App",
-  data: () => ({})
+  data: () => ({}),
+  computed: {
+    ...mapGetters(['isLogged'])
+  },
+  methods: {
+    ...mapActions(['logout'])
+  }
 };
 </script>

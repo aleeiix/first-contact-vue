@@ -38,6 +38,7 @@
 
 <script>
 import { firebase, auth, firestore } from "@/config/firebase";
+import {mapMutations} from "vuex";
 
 export default {
   data() {
@@ -46,6 +47,7 @@ export default {
     };
   },
   methods: {
+    ...mapMutations(['setUser']),
     loginGoogle() {
       const provider = new firebase.auth.GoogleAuthProvider();
       this.login(provider);
@@ -64,16 +66,26 @@ export default {
         console.log(user);
 
         // Build userDB
-        const userDB = Object.assign({}, {
-          name: user.displayName,
-          email: user.email,
-          uid: user.uid,
-          photo: user.photoURL
-        });
+        const userDB = Object.assign(
+          {},
+          {
+            name: user.displayName,
+            email: user.email,
+            uid: user.uid,
+            photo: user.photoURL
+          }
+        );
+
+        this.setUser(userDB);
 
         // Insert in DB
-        await firestore.collection('users').doc(userDB.uid).set(userDB);
-        console.log('User in DB');
+        await firestore
+          .collection("users")
+          .doc(userDB.uid)
+          .set(userDB);
+        console.log("User in DB");
+        
+        this.$router.push({name: 'home'});
       } catch (error) {
         console.log(error);
       }
