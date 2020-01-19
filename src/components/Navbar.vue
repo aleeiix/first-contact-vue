@@ -1,18 +1,10 @@
 <template>
-  <v-app-bar app color="primary" dark>
-      <router-link :to="{name: 'home'}">
-        <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
+  <nav>
+    <v-app-bar color="primary" dark app>
+      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
-        <span class="mt-1 white--text">Vue</span>
-      </div>
+      <router-link :to="{name: 'home'}">
+        <v-toolbar-title class="white--text">Vue</v-toolbar-title>
       </router-link>
 
       <v-spacer></v-spacer>
@@ -22,16 +14,51 @@
         <v-icon>fas fa-external-link-alt</v-icon>
       </v-btn>
     </v-app-bar>
+
+    <v-navigation-drawer v-model="drawer" color="primary" app>
+
+      <div class="mt-5 mb-5 text-center">
+         <v-avatar>
+            <img :src="user.photo" />
+          </v-avatar>
+          <p class="white--text mt-3">{{user.name}}</p>
+      </div>
+      
+      <v-divider></v-divider>
+
+      <v-list>
+        <v-list-item v-for="(item, index) of items" :key="index" :to="item.link">
+          <v-list-item-icon>
+            <v-icon class="white--text">{{item.icon}}</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title class="white--text">{{item.title}}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+  </nav>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters, mapState } from "vuex";
 export default {
-    computed: {
-        ...mapGetters(['isLogged'])
-    },
-    methods: {
-        ...mapActions(['logout'])
-    },
-}
+  data() {
+    return {
+      drawer: false,
+      items: [
+        { title: "Dashboard", icon: "fas fa-address-card", link: {name: 'home'}},
+        { title: "Account", icon: "fas fa-address-card", link: {name: 'home'}},
+        { title: "Admin", icon: "fas fa-address-card", link: {name: 'admin'}}
+      ]
+    };
+  },
+  computed: {
+    ...mapState(['user']),
+    ...mapGetters(["isLogged"])
+  },
+  methods: {
+    ...mapActions(["logout"])
+  }
+};
 </script>
