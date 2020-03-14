@@ -7,3 +7,4 @@ First contact in vue realizing a course of udemy, which explains why it is cdn a
 - **auth-crud-firebase** -> The mix of the two previous projects
 - **vuetify-axios** -> a simple project testing vuetify and collecting data from a public api
 - **auth-gmail-facebook** -> a login project with gmail or facebook
+- **chat** -> starting from the `auth-gmail-facebook` branch implementing a chat
