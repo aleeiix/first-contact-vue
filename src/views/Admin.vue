@@ -58,6 +58,7 @@ export default {
       const typeFile = event.target.files[0].type;
 
       if (typeFile === "image/jpeg" || typeFile === "image/png") {
+        this.error = null;
         this.file = event.target.files[0];
 
         const reader = new FileReader();
