@@ -89,6 +89,9 @@ export default {
           .collection("users")
           .doc(this.user.uid)
           .update({ photo: this.user.photo });
+
+        this.error = "File upload successfully";
+        this.file = null;
       } catch (error) {
         console.log(error);
       } finally {
