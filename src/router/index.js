@@ -19,6 +19,13 @@ const routes = [
     meta: { requiredAuth: true }
   },
   {
+    path: "/chat",
+    name: "chat",
+    component: () =>
+      import(/* webpackChunkName: "admin" */ "../views/Chat.vue"),
+    meta: { requiredAuth: true }
+  },
+  {
     path: "/login",
     name: "login",
     component: () =>

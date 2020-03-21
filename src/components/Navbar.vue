@@ -48,7 +48,7 @@ export default {
       items: [
         {
           title: "Dashboard",
-          icon: "fas fa-address-card",
+          icon: "fas fa-home",
           link: { name: "home" }
         },
         {
@@ -56,7 +56,16 @@ export default {
           icon: "fas fa-address-card",
           link: { name: "home" }
         },
-        { title: "Admin", icon: "fas fa-address-card", link: { name: "admin" } }
+        {
+          title: "Admin",
+          icon: "fas fa-cog",
+          link: { name: "admin" }
+        },
+        {
+          title: "Chat",
+          icon: "fas fa-comments",
+          link: { name: "chat" }
+        }
       ]
     };
   },
