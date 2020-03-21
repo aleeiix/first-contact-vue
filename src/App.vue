@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    {{ isLogged }}
     <Navbar v-if="isLogged"></Navbar>
     <v-content>
       <v-container>
