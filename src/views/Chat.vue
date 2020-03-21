@@ -5,24 +5,33 @@
       <!--cols="6"-->
       <v-card>
         <v-card-text>
-          <h3>Welcome {{user.name}}</h3>
+          <h3>Welcome {{ user.name }}</h3>
         </v-card-text>
 
-        <v-card-text>
-          <div class="text-right" v-for="(item, index) in messages" :key="index">
+        <v-card-text class="messageContainer" v-chat-scroll>
+          <div
+            :class="item.userName === user.name ? 'text-right' : 'text-left'"
+            v-for="(item, index) in messages"
+            :key="index"
+          >
             <v-chip>
               <v-avatar class="mr-2">
                 <img :src="item.userImage" />
               </v-avatar>
-              {{item.message}}
+              {{ item.message }}
             </v-chip>
-            <p class="caption mr-1">item.date</p>
+            <p class="caption mr-1">{{ item.date }}</p>
           </div>
         </v-card-text>
 
         <v-card-text>
           <v-form @submit.prevent="sendMessage()" v-model="valid">
-            <v-text-field v-model="message" label="Write your message" required :rules="rules"></v-text-field>
+            <v-text-field
+              v-model="message"
+              label="Write your message"
+              required
+              :rules="rules"
+            ></v-text-field>
           </v-form>
         </v-card-text>
       </v-card>
@@ -32,6 +41,7 @@
 
 <script>
 import { mapState } from "vuex";
+import moment from "moment";
 import { firestore } from "@/config/firebase";
 
 export default {
@@ -64,13 +74,31 @@ export default {
     }
   },
   created() {
-    const ref = firestore.collection("chats");
+    moment.locale("es");
+
+    const ref = firestore
+      .collection("chats")
+      .orderBy("date", "desc")
+      .limit(10);
+
     ref.onSnapshot(querySnapshot => {
       this.messages = [];
       querySnapshot.forEach(doc => {
-        this.messages.push(doc.data());
+        this.messages.unshift({
+          message: doc.data().message,
+          userName: doc.data().userName,
+          userImage: doc.data().userImage,
+          date: moment(doc.data().date).format("lll")
+        });
       });
     });
   }
 };
 </script>
+
+<style>
+.messageContainer {
+  height: 60vh;
+  overflow: auto;
+}
+</style>
